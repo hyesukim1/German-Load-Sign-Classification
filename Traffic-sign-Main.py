@@ -156,12 +156,12 @@ def myModel():
     size_of_pool=(2, 2)
     no_Of_Nodes = 500
     model = Sequential()
-    model.add((Conv2D(no_Of_Fileters, size_of_Filter, input_shape=(imageDimensions[0], imageDimensions[1], 1), activation='relu')))
+    model.add((Conv2D(no_Of_Fileters, size_of_Filter, input_shape=(imageDimesions[0], imageDimesions[1], 1), activation='relu')))
     model.add((Conv2D(no_Of_Fileters, size_of_Filter, activation='relu')))
     model.add(MaxPooling2D(pool_size=size_of_pool)) # does not effect the depth/no of filters
     
-    model.add((Conv2D(no_Of_Fileters//2, size_of_Filter2, activation='relu')))
-    model.add((Conv2D(no_Of_Fileters//2, size_of_Filter2, activation='relu')))
+    model.add((Conv2D(no_Of_Fileters//2, size_of_Filters2, activation='relu')))
+    model.add((Conv2D(no_Of_Fileters//2, size_of_Filters2, activation='relu')))
     model.add(MaxPooling2D(pool_size=size_of_pool))
     model.add(Dropout(0.5))
     
