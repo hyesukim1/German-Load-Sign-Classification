@@ -74,29 +74,29 @@ assert(x_test.shape[1:]==(imageDimesions))
 data=pd.read_csv(labelFile)
 print("data shape", data.shape, type(data))
 
-# # Display some samples images of all the classes
-# num_of_samples = []
-# cols = 5
-# num_classes = noOfClasses
-# fig, axs = plt.subplots(nrows=num_classes, ncols=cols, figsize=(5, 300))
-# fig.tight_layout()
-# for i in range(cols):
-#     for j, row in data.iterrows():
-#         x_selected = x_train[y_train == j]
-#         axs[j][i].imshow(x_selected[random.randint(0, len(x_selected)-1), :, :], cmap=plt.get_cmap("gray"))
-#         axs[j][i].axis("off")
-#         if i == 2:
-#             axs[j][i].set_title(str(j)+"-"+row["Name"])
-#             num_of_samples.append(len(x_selected))
+# Display some samples images of all the classes
+num_of_samples = []
+cols = 5
+num_classes = noOfClasses
+fig, axs = plt.subplots(nrows=num_classes, ncols=cols, figsize=(5, 300))
+fig.tight_layout()
+for i in range(cols):
+    for j, row in data.iterrows():
+        x_selected = x_train[y_train == j]
+        axs[j][i].imshow(x_selected[random.randint(0, len(x_selected)-1), :, :], cmap=plt.get_cmap("gray"))
+        axs[j][i].axis("off")
+        if i == 2:
+            axs[j][i].set_title(str(j)+"-"+row["Name"])
+            num_of_samples.append(len(x_selected))
             
-# # Display a bar chart showing no of samples for each category
-# print(num_of_samples)
-# plt.figure(figsize=(12, 4))
-# plt.bar(range(0, num_classes), num_of_samples)
-# plt.title("Distribution of the training dataset")
-# plt.xlabel("Class number")
-# plt.ylabel("Number of images")
-# plt.show()
+# Display a bar chart showing no of samples for each category
+print(num_of_samples)
+plt.figure(figsize=(12, 4))
+plt.bar(range(0, num_classes), num_of_samples)
+plt.title("Distribution of the training dataset")
+plt.xlabel("Class number")
+plt.ylabel("Number of images")
+plt.show()
 
 # preprocessing the images
 def grayscale(img):
@@ -177,10 +177,7 @@ def myModel():
 # train
 model = myModel()
 print(model.summary())
-history = model.fit_generator(dataGen.flow(x_train, y_train, batch_size=batch_size_val), 
-                                stpes_per_epoch=steps_per_epoch_val,
-                                epochs= epochs_val,
-                                batch_size=50) # 유튜브에서 짤려서 뭔지 모름
+history = model.fit_generator(dataGen.flow(x_train, y_train, batch_size=batch_size_val), steps_per_epoch=steps_per_epoch_val, epochs= epochs_val, validation_data=(x_val, y_val), shuffle=1) # 유튜브에서 짤려서 뭔지 모름
 
 # plot
 plt.figure(1)
@@ -189,6 +186,7 @@ plt.plot(history.history['val_loss'])
 plt.legend(['training', 'validation'])
 plt.title('loss')
 plt.xlabel('epoch')
+
 plt.figure(2)
 plt.plot(history.history['accuracy'])
 plt.plot(history.history['val_accuracy'])
@@ -196,6 +194,7 @@ plt.legend(['training', 'validation'])
 plt.title('Acurracy')
 plt.xlabel('epoch')
 plt.show()
+
 score = model.evaluate(x_test, y_test, verbose=0)
 print('Test Score:', score[0])
 print('Test Accuracy:', score[1])

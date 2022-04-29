@@ -9,7 +9,7 @@ threshold = 0.90
 font = cv2.FONT_HERSHEY_SIMPLEX
 
 # setup the video camera
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 cap.set(3, frameWidth)
 cap.set(4, frameHeight)
 cap.set(10, brightness)
