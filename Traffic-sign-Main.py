@@ -177,7 +177,7 @@ def myModel():
 # train
 model = myModel()
 print(model.summary())
-history = model.fit_generator(dataGen.flow(x_train, y_train, batch_size=batch_size_val), steps_per_epoch=steps_per_epoch_val, epochs= epochs_val, validation_data=(x_val, y_val), shuffle=1) # 유튜브에서 짤려서 뭔지 모름
+history = model.fit_generator(dataGen.flow(x_train, y_train, batch_size=batch_size_val), steps_per_epoch=steps_per_epoch_val, epochs= epochs_val, validation_data=(x_val, y_val), shuffle=1) 
 
 # plot
 plt.figure(1)
