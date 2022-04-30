@@ -1,6 +1,6 @@
 import numpy as np
 import cv2
-import pickle
+from keras.models import load_model
 
 frameWidth = 640
 frameHeight = 480
@@ -15,8 +15,12 @@ cap.set(4, frameHeight)
 cap.set(10, brightness)
 
 # import the trained model
-pickle_in=open(".\model_trained.p", "rb") ## rb = read byte
-model = pickle.load(pickle_in)
+
+
+# with open("model_trained.txt", "rb") as pickle_in: ## rb = read byte
+#     model = pickle.load(pickle_in)
+
+model= load_model('my_model.h5')
 
 def grayscale(img):
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -82,7 +86,7 @@ while True:
     success, imgOrignal = cap.read()
     
     # process image
-    img = np.asarray(imgOrignal)
+    img = np.array(imgOrignal)
     img = cv2.resize(img, (32, 32))
     img = preprocessing(img)
     cv2.imshow("processed Image", img)
@@ -92,7 +96,7 @@ while True:
     
     #predict image
     predictions = model.predict(img)
-    classIndex = model.predict_classes(img)
+    classIndex = model.predict_step(img)
     probabilityValue = np.amax(predictions)
     if probabilityValue > threshold:
         # print(getClassname(classindex))
@@ -102,7 +106,3 @@ while True:
     
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
-    
-tf.saved_model.LoadOptions(
-    experimental_io_device=None
-)

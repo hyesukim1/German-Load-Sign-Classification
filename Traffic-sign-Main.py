@@ -14,6 +14,8 @@ import os
 import pandas as pd
 import random
 from keras.preprocessing.image import ImageDataGenerator
+from keras.models import load_model
+
 
 # parameters
 path = "myData" # folder with all the class folders
@@ -200,7 +202,9 @@ print('Test Score:', score[0])
 print('Test Accuracy:', score[1])
 
 # store the model as a pickle object
-pickle_out = open("model_trained.p", "wb")
-pickle.dump(model, pickle_out)
-pickle_out.close()
-cv2.waitKey(0)
+# pickle_out = open("./model_trained.txt", "wb")
+# pickle.dump(model, pickle_out)
+# pickle_out.close()
+# cv2.waitKey(0)
+
+model.save('my_model.h5') 
