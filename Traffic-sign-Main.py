@@ -19,7 +19,7 @@ from keras.preprocessing.image import ImageDataGenerator
 path = "myData" # folder with all the class folders
 labelFile = 'labels.csv' # file with all names of classes
 batch_size_val = 50 # how manu to process together
-steps_per_epoch_val = 2000
+steps_per_epoch_val = 100
 epochs_val =10
 imageDimesions = (32, 32, 3)
 testRatio = 0.2

@@ -5,17 +5,17 @@ import pickle
 frameWidth = 640
 frameHeight = 480
 brightness = 180
-threshold = 0.90
+threshold = 0.75
 font = cv2.FONT_HERSHEY_SIMPLEX
 
 # setup the video camera
-cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+cap = cv2.VideoCapture(0)
 cap.set(3, frameWidth)
 cap.set(4, frameHeight)
 cap.set(10, brightness)
 
 # import the trained model
-pickle_in=open("model_trained.p", "rb") ## rb = read byte
+pickle_in=open(".\model_trained.p", "rb") ## rb = read byte
 model = pickle.load(pickle_in)
 
 def grayscale(img):
@@ -88,7 +88,7 @@ while True:
     cv2.imshow("processed Image", img)
     img = img.reshape(1, 32, 32, 1)
     cv2.putText(imgOrignal, "CLASS: ", (20, 35), font, 0.75, (0, 0, 255), 2, cv2.LINE_AA)
-    cv2.putText(imgOrignal, "PROBABILITY: ", (20, 75), font, 0.75, (255, 0, 0), 2, cv2.LINE_AA)
+    cv2.putText(imgOrignal, "PROBABILITY: ", (20, 75), font, 0.75, (0, 0, 255), 2, cv2.LINE_AA)
     
     #predict image
     predictions = model.predict(img)
@@ -97,8 +97,12 @@ while True:
     if probabilityValue > threshold:
         # print(getClassname(classindex))
         cv2.putText(imgOrignal, str(classIndex)+" "+str(getClassName(classIndex)), (120, 35), font, 0.75, (0, 0, 255), 2, cv2.LINE_AA)
-        cv2.putText(imgorgnal, str(round(probabilityValue*100, 2))+"%", (180, 75), font, 0.75, (255, 0, 0), 2, cv2.LINE_AA)
+        cv2.putText(imgOrignal, str(round(probabilityValue*100, 2))+"%", (180, 75), font, 0.75, (0, 0, 255), 2, cv2.LINE_AA)
     cv2.imshow("Result", imgOrignal)
     
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
+    
+tf.saved_model.LoadOptions(
+    experimental_io_device=None
+)
