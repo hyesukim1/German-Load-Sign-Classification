@@ -96,7 +96,7 @@ while True:
     
     #predict image
     predictions = model.predict(img)
-    classIndex =  np.argmax(model.predict(img), axis=-1) #텐서플로우 2.6 버전 이후부터는 predict_classes 사용 안됨
+    classIndex = np.argmax(model.predict(img), axis=-1) #텐서플로우 2.6 버전 이후부터는 predict_classes 사용 안됨
     probabilityValue = np.amax(predictions)
     if probabilityValue > threshold:
         # print(getClassName(classIndex))
